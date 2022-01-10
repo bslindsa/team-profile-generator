@@ -1,87 +1,135 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const generateMarkdown = require('./generateMarkdown.js');
+const generateMarkdown = require('./util/generateMarkdown.js');
+// const Employee = require('./lib/employee');
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
 
-
-
-// Array of questions for user input
-const questions = [
-    "What is your name?",
-    "Enter your project title: ",
-    "Describe your project: ",
-    "How does the user install your project?",
-    "Describe how your project is used: ",
-    "Instructions for contributing: ",
-    "Command to test: ",
-    "Choose a license: ",
-    "Enter your github username: ",
-    "Enter your email address: "
-];
-
-
-
+let role = 'Manager';
 
 //Function to initialize app
-function init() {
-    inquirer
-    .prompt([
-    {
-        type: 'input',
-        message: questions[0],
-        name: 'name',
-    },
-    {
-        type: 'input',
-        message: questions[1],
-        name: 'title',
-    },
-    {
-        type: 'input',
-        message: questions[2],
-        name: 'description',
-    },
-    {
-        type: 'input',
-        message: questions[3],
-        name: 'installation',
-    },
-    {
-        type: 'input',
-        message: questions[4],
-        name: 'usage',
-    },
-    {
-        type: 'input',
-        message: questions[5],
-        name: 'contributing',
-    },
-    {
-        type: 'input',
-        message: questions[6],
-        name: 'tests',
-    },
-    {
-        type: 'list',
-        message: questions[7],
-        name: 'license',
-        choices: ['Apache 2.0','Boost','BSD 3','BSD 2','None']
-    },
-    {
-        type: 'input',
-        message: questions[8],
-        name: 'githubUser',
-    },
-    {
-        type: 'input',
-        message: questions[9],
-        name: 'email',
-    }
-    ])
-    .then((data) => {        
-        fs.writeFile('team.html', generateMarkdown(data), (err) => {
-            err ? console.error(err) : console.log('Success!');
+function init() {  
+    if (role === 'Manager') {
+        inquirer
+        .prompt([   
+        {
+            type: 'input',
+            message: "What is the team manager's name?",
+            name: 'name',
+        },
+        {
+            type: 'input',
+            message: "What is the team manager's ID?",
+            name: 'id',
+        },
+        {
+            type: 'input',
+            message: "What is the team manager's email?",
+            name: 'email',
+        },
+        {
+            type: 'input',
+            message: "What is the team manager's office number?",
+            name: 'officeNumber',
+        },
+        {
+            type: 'list',
+            message: "Which type of team member would you like to add?",
+            name: 'role',
+            choices: ['Engineer', 'Intern', "I don't want to add any more team members"]
+        },
+        ])
+        .then((data) => {   
+            role = data.role;
+            const manager = new Manager(data.name, data.id, data.email, data.officeNumber)     
+            // fs.writeFile('index.html', generateMarkdown(data), (err) => {
+            //     err ? console.error(err) : console.log('Success!');
+            // });
+            console.log(manager);
+            init();
         });
-    });
+    }
+    else if (role === 'Engineer') {
+        inquirer
+        .prompt([   
+        {
+            type: 'input',
+            message: "What is the engineer's name?",
+            name: 'name',
+        },
+        {
+            type: 'input',
+            message: "What is the engineer's ID?",
+            name: 'id',
+        },
+        {
+            type: 'input',
+            message: "What is the engineer's email?",
+            name: 'email',
+        },
+        {
+            type: 'input',
+            message: "What is the engineer's github username?",
+            name: 'github',
+        },
+        {
+            type: 'list',
+            message: "Which type of team member would you like to add?",
+            name: 'role',
+            choices: ['Engineer', 'Intern', "I don't want to add any more team members"]
+        },
+        ])
+        .then((data) => {   
+            role = data.role;
+            const engineer = new Engineer(data.name, data.id, data.email, data.github)     
+            // fs.writeFile('index.html', generateMarkdown(data), (err) => {
+            //     err ? console.error(err) : console.log('Success!');
+            // });
+            console.log(engineer);
+            init();
+        });
+    }
+    else if (role === 'Intern') {
+        inquirer
+        .prompt([   
+        {
+            type: 'input',
+            message: "What is the intern's name?",
+            name: 'name',
+        },
+        {
+            type: 'input',
+            message: "What is the intern's ID?",
+            name: 'id',
+        },
+        {
+            type: 'input',
+            message: "What is the intern's email?",
+            name: 'email',
+        },
+        {
+            type: 'input',
+            message: "What is the intern's school?",
+            name: 'school',
+        },
+        {
+            type: 'list',
+            message: "Which type of team member would you like to add?",
+            name: 'role',
+            choices: ['Engineer', 'Intern', "I don't want to add any more team members"]
+        },
+        ])
+        .then((data) => {   
+            role = data.role;
+            const intern = new Intern(data.name, data.id, data.email, data.school)     
+            // fs.writeFile('index.html', generateMarkdown(data), (err) => {
+            //     err ? console.error(err) : console.log('Success!');
+            // });
+            console.log(intern);
+            init();
+        });  
+    }
 }
 
 // Function call to initialize app
