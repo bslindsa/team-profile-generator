@@ -1,12 +1,16 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateMarkdown = require('./util/generateMarkdown.js');
-// const Employee = require('./lib/employee');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 
+const path =require('path'); 
+const DIST_DIR = path.resolve(__dirname, 'dist');
+const distPath = path.join(DIST_DIR, 'index.html');
+
 let role = 'Manager';
+let teamCards = [];
 
 //Function to initialize app
 function init() {  
@@ -42,11 +46,8 @@ function init() {
         ])
         .then((data) => {   
             role = data.role;
-            const manager = new Manager(data.name, data.id, data.email, data.officeNumber)     
-            // fs.writeFile('index.html', generateMarkdown(data), (err) => {
-            //     err ? console.error(err) : console.log('Success!');
-            // });
-            console.log(manager);
+            const manager = new Manager(data.name, data.id, data.email, data.officeNumber);    
+            teamCards.push(manager);
             init();
         });
     }
@@ -82,11 +83,8 @@ function init() {
         ])
         .then((data) => {   
             role = data.role;
-            const engineer = new Engineer(data.name, data.id, data.email, data.github)     
-            // fs.writeFile('index.html', generateMarkdown(data), (err) => {
-            //     err ? console.error(err) : console.log('Success!');
-            // });
-            console.log(engineer);
+            const engineer = new Engineer(data.name, data.id, data.email, data.github);     
+            teamCards.push(engineer);
             init();
         });
     }
@@ -122,13 +120,16 @@ function init() {
         ])
         .then((data) => {   
             role = data.role;
-            const intern = new Intern(data.name, data.id, data.email, data.school)     
-            // fs.writeFile('index.html', generateMarkdown(data), (err) => {
-            //     err ? console.error(err) : console.log('Success!');
-            // });
-            console.log(intern);
+            const intern = new Intern(data.name, data.id, data.email, data.school);     
+            teamCards.push(intern);
             init();
         });  
+    }
+    else{
+        console.log("generating team html page ..."); 
+        fs.writeFile(distPath, generateMarkdown(teamCards), (err) => {
+            err ? console.error(err) : console.log('Success!');
+        });
     }
 }
 
