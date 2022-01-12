@@ -1,9 +1,9 @@
 // Generate the manager html card.
 function generateManager(manager) {
-  return `<div class="card custom-card col-4" style="width: 18rem;">
+  return `<div class="card custom-card">
   <div class="card-header">
       <h3>${manager.name}</h3>
-      <i class="fa fa-blind fa-lg" style="color:blue"></i> ${manager.getRole()}
+      <i class="fa fa-blind fa-lg" style="color:maroon"></i> ${manager.getRole()}
   </div>
   <div class="custom-list">
     <ul class="list-group list-group-flush m-3">
@@ -18,10 +18,10 @@ function generateManager(manager) {
  
 // Generate the Engineer html card.
 function generateEngineer(engineer) {
-  return `<div class="card custom-card col-4" style="width: 18rem;">
+  return `<div class="card custom-card">
   <div class="card-header">
       <h3>${engineer.name}</h3>
-      <i class="fa fa-gears fa-lg" style="color:blue"></i> ${engineer.getRole()}
+      <i class="fa fa-gears fa-lg" style="color:maroon"></i> ${engineer.getRole()}
   </div>
   <div class="custom-list">
     <ul class="list-group list-group-flush m-3">
@@ -36,10 +36,10 @@ function generateEngineer(engineer) {
 
 // Generate the Intern html card.
 function generateIntern(intern) {
-  return `<div class="card custom-card col-4" style="width: 18rem;">
+  return `<div class="card custom-card">
   <div class="card-header">
       <h3>${intern.name}</h3>
-      <i class="fa fa-mortar-board fa-lg" style="color:blue"></i> ${intern.getRole()}
+      <i class="fa fa-mortar-board fa-lg" style="color:maroon"></i> ${intern.getRole()}
   </div>
   <div class="custom-list">
     <ul class="list-group list-group-flush m-3">
@@ -96,8 +96,8 @@ function generateMarkdown(teamCards) {
         <h1>
       </header>
       <main class="container">
-          <div id="team" class="row d-flex justify-content-center">
-            ${divCards}
+      <div class="employees card-deck justify-content-center">
+      ${divCards}
           </div>
       </main>
   </body>
